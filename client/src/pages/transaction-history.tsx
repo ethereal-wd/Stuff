@@ -127,7 +127,7 @@ export default function TransactionHistory() {
   };
 
   const handleFilterChange = (filterType: keyof FilterState, value: string | Date | null, action: 'add' | 'remove' | 'set' = 'add') => {
-    let newFilters = { ...filters };
+    const newFilters = { ...filters };
     
     if (filterType === 'dateRange') {
       if (typeof value === 'object' && value instanceof Date) {
@@ -138,11 +138,34 @@ export default function TransactionHistory() {
         }
       }
     } else if (typeof value === 'string') {
-      const currentArray = newFilters[filterType] as string[];
-      if (action === 'add' && !currentArray.includes(value)) {
-        newFilters[filterType] = [...currentArray, value] as any;
-      } else if (action === 'remove') {
-        newFilters[filterType] = currentArray.filter(item => item !== value) as any;
+      if (filterType === 'platforms') {
+        const currentArray = newFilters.platforms;
+        if (action === 'add' && !currentArray.includes(value)) {
+          newFilters.platforms = [...currentArray, value];
+        } else if (action === 'remove') {
+          newFilters.platforms = currentArray.filter(item => item !== value);
+        }
+      } else if (filterType === 'coins') {
+        const currentArray = newFilters.coins;
+        if (action === 'add' && !currentArray.includes(value)) {
+          newFilters.coins = [...currentArray, value];
+        } else if (action === 'remove') {
+          newFilters.coins = currentArray.filter(item => item !== value);
+        }
+      } else if (filterType === 'status') {
+        const currentArray = newFilters.status;
+        if (action === 'add' && !currentArray.includes(value)) {
+          newFilters.status = [...currentArray, value];
+        } else if (action === 'remove') {
+          newFilters.status = currentArray.filter(item => item !== value);
+        }
+      } else if (filterType === 'types') {
+        const currentArray = newFilters.types;
+        if (action === 'add' && !currentArray.includes(value)) {
+          newFilters.types = [...currentArray, value];
+        } else if (action === 'remove') {
+          newFilters.types = currentArray.filter(item => item !== value);
+        }
       }
     }
     
